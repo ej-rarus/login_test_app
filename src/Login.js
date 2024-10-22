@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 
-
 function Login({ setToken, setMessage }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +11,10 @@ function Login({ setToken, setMessage }) {
                 username,  // React 상태에서 가져온 username
                 password   // React 상태에서 가져온 password
             });
-            setToken(response.data.token);
+            
+            const token = response.data.token;
+            setToken(token);  // 상태에 토큰 저장
+            localStorage.setItem('jwtToken', token);  // 로컬 스토리지에 토큰 저장
             setMessage('Login successful');
         } catch (error) {
             setMessage(error.response?.data?.message || 'Login failed');
